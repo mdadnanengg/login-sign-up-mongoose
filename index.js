@@ -7,7 +7,7 @@ const app = express()
 const port = 8000
 
 // middleware
-app.use('/', loginRoutes)
+app.use('/', loginRoutes) 
 
 
 app.listen(port, () => {

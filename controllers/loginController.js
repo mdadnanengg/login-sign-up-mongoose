@@ -1,5 +1,5 @@
 import { join } from "path"
-import { createUser, fetchUserLogin } from '../../index.js'
+import { createUser, fetchUserLogin } from '../../index.js' 
 
 const getHomeData = (req, res) => {
     res.sendFile(join(process.cwd(), 'views', 'home.html'))
