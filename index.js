@@ -1,10 +1,13 @@
 import express from 'express'
 import loginRoutes from './routes/loginRoutes.js'
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
+dotenv.config();
 
 const app = express()
-const port = 8000
+const port = process.env.PORT || 8000
+const mongoDB_URL = process.env.MongoDB_URL || 'mongodb://0.0.0.0:27017/userDB'
 
 // middleware
 app.use('/', loginRoutes) 
@@ -14,7 +17,7 @@ app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`);
 })
 
-mongoose.connect('mongodb://0.0.0.0:27017/userDetails')
+mongoose.connect(process.env.mongoDB_URL)
 
 let db = mongoose.connection
 
@@ -25,7 +28,7 @@ db.on('open', () => {
 // login and SignUp schema
 let userSchema = mongoose.Schema({
     username: String,
-    mobilenumber: Number,
+    mobileNumber: Number,
     email: String,
     password: String
 })
@@ -41,14 +44,14 @@ let fetchUserLogin = async (username) => {
 
 
 
-const createUser = async (username, mobilenumber, email, password) => {
+const createUser = async (username, mobileNumber, email, password) => {
     //userSignUpModel
 
     const userSignUpModel = mongoose.model('user', userSchema)
 
     let c1 = userSignUpModel({
         username: username,
-        mobilenumber: mobilenumber,
+        mobileNumber: mobileNumber,
         email: email,
         password: password
     })

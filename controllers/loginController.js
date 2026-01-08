@@ -1,5 +1,5 @@
 import { join } from "path"
-import { createUser, fetchUserLogin } from '../../index.js' 
+import { createUser, fetchUserLogin } from '../index.js'
 
 const getHomeData = (req, res) => {
     res.sendFile(join(process.cwd(), 'views', 'home.html'))
@@ -12,18 +12,23 @@ const getRegisterData = (req, res) => {
 const postRegisterData = async (req, res) => {
     console.log(req.body)
 
-    let { username, mobilenumber, email, password, confirmpassword } = req.body
+    let { username, mobileNumber, email, password, confirmPassword } = req.body
 
-    if (password == confirmpassword) {
+    if (!username || !mobileNumber || !email || !password || !confirmPassword) {
+        res.send('All fields are required')
+        return
+    }
 
-        let status = await createUser(username, mobilenumber, email, password)
+    if (password == confirmPassword) {
+
+        let status = await createUser(username, mobileNumber, email, password)
 
         console.log(status)
-        
+
         if (status == 'success') {
             res.send('registration successfully')
         } else {
-            res.send('registration un successfully')
+            res.send('registration unsuccessfully')
         }
 
     } else {
@@ -43,14 +48,9 @@ const postLoginData = async (req, res) => {
 
     let databaseData = await fetchUserLogin(username)
 
-    // console.log(databaseData);
-
-
-
-
     if (databaseData.length > 0) {
         if (username == databaseData[0].username && password == databaseData[0].password) {
-            res.send('Login Successfull')
+            res.send('Login Successful')
         } else {
             res.send('Wrong Username or Password')
         }

@@ -1,5 +1,5 @@
 import express from 'express' 
-import { getLoginData, postLoginData, getHomeData, getRegisterData, postRegisterData } from '../login-sign-up-mongoose/controllers/loginController.js'
+import { getLoginData, postLoginData, getHomeData, getRegisterData, postRegisterData } from '../controllers/loginController.js'
 
 const loginRoutes = express.Router()
 
