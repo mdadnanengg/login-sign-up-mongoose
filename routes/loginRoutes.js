@@ -3,7 +3,7 @@ import { getLoginData, postLoginData, getHomeData, getRegisterData, postRegister
 
 const loginRoutes = express.Router()
 
-loginRoutes.use(express.urlencoded({ extended: true}))
+loginRoutes.use(express.json())
 
 loginRoutes.get('/', getHomeData)
 
