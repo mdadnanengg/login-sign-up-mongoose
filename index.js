@@ -1,6 +1,7 @@
 import express from 'express'
 import loginRoutes from './routes/loginRoutes.js'
 import mongoose from 'mongoose';
+import cors from 'cors'
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -8,6 +9,9 @@ dotenv.config();
 const app = express()
 const port = process.env.PORT || 8000
 const mongoDB_URL = process.env.MongoDB_URL || 'mongodb://0.0.0.0:27017/userDB'
+
+// setup cors
+app.use(cors())
 
 // middleware
 app.use('/', loginRoutes) 
@@ -17,7 +21,7 @@ app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`);
 })
 
-mongoose.connect(process.env.mongoDB_URL)
+mongoose.connect(mongoDB_URL)
 
 let db = mongoose.connection
 
